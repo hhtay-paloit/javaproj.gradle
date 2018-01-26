@@ -1,14 +1,16 @@
 
 // if the plugin is "external" (doesn't belong to gradle)
 // you need to declare it here
+/*
 plugins {
 	id "org.sonarqube" version "2.5"
 }
+*/
 
 // plugins provide tasks
 // find all using gradle tasks --all
 apply plugin: 'java'
-apply plugin: 'org.sonarqube'
+apply plugin: "jacoco"
 
 // will produce <name>-1.0.19.jar
 version = '1.0.19'
@@ -35,6 +37,17 @@ jar {
     }
 }
 
+jacoco {
+    toolVersion = "0.7.9"
+}
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacoco-test.exec")
+    }
+}
+
 // example tasks - very similar to ANT
 /*
 
@@ -43,20 +56,33 @@ jar {
 
 task('hello') {
 	group 'hhtay' // group seen from gradle tasks --all
-    doLast {
-        println "hello"
-    }
+	doLast {
+		println "hello"
+	}
 }
 
 task('copy', type: Copy) {
-    from(file('srcDir'))
-    into(buildDir)
+	from(file('srcDir'))
+	into(buildDir)
 }
 
-task groupPing {
-    dependsOn pingServer1, pingServer2
+task hello {
+	doLast {
+		println 'Hello world!'
+	}
+}
+
+task intro {
+	dependsOn hello
+	doLast {
+		println "I'm Gradle"
+	}
 }
 
 compileJava.doFirst { println 'Another action applied to the "compileJava" task' }
 
 */
+
+
+
+
