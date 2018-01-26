@@ -1,22 +1,62 @@
 
-apply plugin: 'java'
+// if the plugin is "external" (doesn't belong to gradle)
+// you need to declare it here
+plugins {
+	id "org.sonarqube" version "2.5"
+}
 
+// plugins provide tasks
+// find all using gradle tasks --all
+apply plugin: 'java'
+apply plugin: 'org.sonarqube'
+
+// will produce <name>-1.0.19.jar
 version = '1.0.19'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+// compilation compatibility
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
+// repository to download dependencies
 repositories {
     mavenCentral()
 }
 
+// dependencies
 dependencies {
-    testCompile 'junit:junit:4.12'
+	// compile 'group:artifact:version' // GAV (group:artifact:version) for compile time
+	testCompile 'junit:junit:4.12' // for compile time for testing only
 }
 
 jar {
+	// add manifest information to jar file
     manifest {
-        attributes 'Main-Class': 'java.Library'
+    	// attributes 'Main-Class': 'hhtay.App' 
     }
 }
 
+// example tasks - very similar to ANT
+/*
+
+// code execution sequence
+// doFirst {}, {} then doLast{}
+
+task('hello') {
+	group 'hhtay' // group seen from gradle tasks --all
+    doLast {
+        println "hello"
+    }
+}
+
+task('copy', type: Copy) {
+    from(file('srcDir'))
+    into(buildDir)
+}
+
+task groupPing {
+    dependsOn pingServer1, pingServer2
+}
+
+compileJava.doFirst { println 'Another action applied to the "compileJava" task' }
+
+*/
