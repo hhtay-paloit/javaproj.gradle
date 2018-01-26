@@ -14,7 +14,7 @@ pipeline {
 		stage ('build') {	          
 			agent any
 				steps {	    
-					sh 'gradle build'
+					sh 'gradle test'
 			}
 			post {
 				always {
