@@ -14,11 +14,11 @@ pipeline {
 		stage ('build') {	          
 			agent any
 				steps {	    
-					sh 'mvn verify'
+					sh 'gradle build'
 			}
 			post {
 				always {
-					archiveArtifacts artifacts: 'target/*.jar', fingerprint: true 
+					archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true 
 				}
 			}
 		}
